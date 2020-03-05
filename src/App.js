@@ -72,7 +72,7 @@ function App() {
 
   const gainAdjust = (gain) => { 
     adjustSelectedItem(gain);
-    drawGainLine([gain.buy.date, gain.sell.date], csvData); 
+    drawGainLine([gain.buy.date, gain.sell.date], csvData, select(svgRef.current)); 
   };
 
   return (
