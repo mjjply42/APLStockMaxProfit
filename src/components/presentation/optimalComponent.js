@@ -29,6 +29,7 @@ export const NotAvailable = () => {
             <div style={styles.mainContainer}>
             <p style={ styles.title }>Optimal Profit Range</p>
                 <div style={ styles.sellContainer }>
+                    <span style={ styles.upArrow }></span>
                     <p style={ styles.optimalSellPrice }>N/A</p>
                 </div>
                 <div style={ styles.buyContainer }>
@@ -101,10 +102,12 @@ const styles = {
         marginTop: '-58px',
         fontSize: '16px',
         color: '#939393',
+        fontWeight: '200',
     },
     title: {
-        fontSize: '13px',
+        fontSize: '14px',
         textAlign: 'center',
         color: '#939393',
+        fontWeight: '300',
     },
 }

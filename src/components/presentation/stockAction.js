@@ -51,11 +51,13 @@ const styles = {
         width: '50%',
         fontSize: '25px',
         color: 'white',
+        fontWeight: '300',
     },
     dateBuy: {
         fontSize: '12px',
         color: 'white',
         marginLeft: '30px',
+        fontWeight: '200',
     },
     dateBuyContainer: {
         backgroundColor: 'red',
@@ -78,12 +80,14 @@ const styles = {
         marginTop: '3px',
         fontSize: '25px',
         color: 'white',
+        fontWeight: '300',
     },
     dateSell: {
         fontSize: '12px',
         backgroundColor: 'green',
         color: 'white',
         marginLeft: '30px',
+        fontWeight: '200',
     },
     dateSellContainer: {
         backgroundColor: 'green',

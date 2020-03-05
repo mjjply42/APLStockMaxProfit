@@ -71,12 +71,14 @@ const styles = {
     symbol: {
         fontSize: '60px',
         marginLeft: '20px',
+        fontWeight: '100',
     },
     companyName: {
         fontSize: '20px',
         marginTop: '-40px',
         marginLeft: '20px',
         color: '#939393',
+        fontWeight: '300',
     },
     nameLineBreak :{
         color: 'black',
