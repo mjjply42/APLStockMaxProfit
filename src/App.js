@@ -54,6 +54,8 @@ function App() {
     const svg = select(svgRef.current);
 
     csv(appleData).then((data) => {
+      if (!data)
+        return;
       updateData(data)
       let profitObject = maxProfit(data);
       updateGains(maxGains(profitObject, data));
@@ -61,8 +63,6 @@ function App() {
       let bisectDate = bisector(function(d) { return d.date; }).left;
       let formatValue = format(",");
       let dateFormatter = timeFormat("%y-%m-%d");
-
-      
 
     let x = scaleTime()
             .range([0, width]);
@@ -211,7 +211,7 @@ bgGradient
                 d1 = data[i],
                 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
             focus.attr("transform", "translate(" + x(d.date) + "," + y(d.price) + ")");
-            tooltip.attr("style", "left:" + (x(d.date) + 70) + "px;top:" + (y(d.price) + 100) + "px;");
+            tooltip.attr("style", "left:" + (x(d.date) + 70) + "px;top:" + (y(d.price) + 0) + "px;");
             tooltip.select(".tooltip-date").text(dateFormatter(d.date));
             tooltip.select(".tooltip-price").text(formatValue(d.price));
         }
@@ -266,7 +266,6 @@ bgGradient
 
   const adjustSelectedItem = (gain) => {
     let gainCopy = JSON.parse(JSON.stringify(gains))
-    console.log("GAIN: ", gainCopy)
     gainCopy.map((g) => {
       if (g.id === gain.id)
         g.selected = true
