@@ -25,8 +25,21 @@ export const Optimal = (props) => {
 export const NotAvailable = () => {
     return (
         <>
-            <p>N/A</p>
-            <p>N/A</p>
+            <>
+            <div style={styles.mainContainer}>
+            <p style={ styles.title }>Optimal Profit Range</p>
+                <div style={ styles.sellContainer }>
+                    <p style={ styles.optimalSellPrice }>N/A</p>
+                </div>
+                <div style={ styles.buyContainer }>
+                    <span style={ styles.downArrow }></span>
+                    <p style={ styles.optimalBuyPrice }>N/A</p>
+                </div>
+                <div style={ styles.optimalDates }>
+                    <p style={ styles.date }>N/A</p>
+                </div>
+            </div>
+        </>
         </>
     )
 };
@@ -38,14 +51,15 @@ const styles = {
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: '36px',
         //backgroundColor: 'pink'
     },
     optimalSellPrice: {
-        fontSize: '30px',
+        fontSize: '20px',
         color: 'green',
     },
     optimalBuyPrice: {
-        fontSize: '30px',
+        fontSize: '20px',
         color: 'red',
     },
     sellContainer: {
@@ -84,7 +98,7 @@ const styles = {
         width: '100%',
     },
     date: {
-        marginTop: '-40px',
+        marginTop: '-58px',
         fontSize: '16px',
         color: '#939393',
     },

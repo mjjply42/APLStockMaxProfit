@@ -2,14 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GainBlock } from '../presentation/gainComponent.js';
 
 export const ProfitPeriod = (props) => {
-    const { data } = props;
+    const { data, optimal } = props;
+    console.log("HHHH: ", optimal)
     return (
         <>
         <div style={styles.profitPeriodContainer}>
             <div style={styles.gainContainer}>
             {data ? data.map((gain, index) => {
                 return (
-                    <GainBlock key={ index } gain={ gain } passGain={ props.passGain }/>
+                    <GainBlock key={ index } gain={ gain } passGain={ props.passGain } optimal={ optimal }/>
                 )
             }) : undefined }
             </div>

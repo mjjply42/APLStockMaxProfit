@@ -2,18 +2,23 @@ import React from 'react';
 import { Buy, Sell } from './stockAction.js';
 
 export const GainBlock = (props) => {
-    const { gain } = props
+    const { gain, optimal } = props
+    console.log("GGGGG: ", gain)
     return (
         <>
         <div onClick={()=>{props.passGain(gain)}} style={{boxShadow: (!gain.selected ? ('-5px 6px 15px #888888') : ('0px 0px 15px 10px steelblue')),
-        backgroundColor: 'white',
-        width: '100%',
-        minHeight: '50px',
-        display: 'flex',
-        marginBottom: '40px',
-        cursor: 'pointer',}}>
+                backgroundColor: 'white',
+                width: '100%',
+                minHeight: '50px',
+                display: 'flex',
+                marginBottom: '40px',
+                cursor: 'pointer',}}>
             <div style={styles.profitDiv}>
-                <h1 style={ styles.profit }> +{ gain.profit } </h1>
+                <h1 style={{minWidth: '110px',
+                        fontSize: '35px',
+                        color: (optimal ?((gain.id === optimal.id) ? 'yellow': 'green'):'green'),
+                        gridArea: 'profit',
+                        textAlign: 'center',}}> +{ gain.profit } </h1>
             </div>
             <div style={ styles.buySell }>
                 <Buy buy={ gain.buy }/>
