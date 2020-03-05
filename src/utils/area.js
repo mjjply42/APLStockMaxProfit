@@ -1,4 +1,3 @@
-import React from 'react';
 import { area, select } from 'd3';
 import { height } from './svgMeasure.js';
 
@@ -32,7 +31,7 @@ const createGradient = (defs) => {
         .append('linearGradient')
         .attr('id', 'area-gradient')
         .attr('gradientTransform', 'rotate(90)');
-    areaGradient.map((item) => {
+    areaGradient.forEach((item) => {
         bgGradient
             .append('stop')
             .attr('stop-color', item.stop)

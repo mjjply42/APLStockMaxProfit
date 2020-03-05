@@ -1,5 +1,4 @@
-import React from 'react';
-import { extent, axisBottom, axisLeft, timeFormat } from 'd3';
+import { extent, axisBottom, axisLeft } from 'd3';
 import { height, width } from './svgMeasure.js';
 import { dateFormatter } from './date.js';
 

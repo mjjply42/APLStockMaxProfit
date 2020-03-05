@@ -1,4 +1,5 @@
-import { select, line, transition } from 'd3';
+import { select, line, transition, scaleTime } from 'd3';
+import { width } from './svgMeasure.js';
 import { parseDate } from './date.js';
 
 export const animateLine = () => {
@@ -43,4 +44,14 @@ export const addGainLine = (x, item, index, svg) => {
         .attr('stroke-dasharray', pathLength)
         .transition(transitionPath)
         .attr('stroke-dashoffset', 0);
+}
+
+export const drawGainLine = (date, orig, svg) => {
+    const x = scaleTime()
+        .range([0, width]);
+    x.domain([orig[0].date, orig[orig.length - 1].date]);
+    svg.selectAll(".gain").remove();
+    date.forEach((item, index) => {
+        addGainLine(x, item, index, svg);
+    })
 }

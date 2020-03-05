@@ -31,7 +31,7 @@ export const maxProfit = (prices) => {
 
 export const maxGains = (profits, data) => {
     let gains = [];
-    profits.map((item, index) => {
+    profits.forEach((item, index) => {
         gains.push({
             id: index,
             buy: {date: data[item.start].date, price: data[item.start].price},

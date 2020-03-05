@@ -1,16 +1,18 @@
 import React from 'react';
-import '../../styles/reset.css'
+import PropTypes from 'prop-types';
+import '../../styles/reset.css';
+
 
 export const Buy = (props) => {
     const { buy } = props;
     return (
         <>
-            <div style={styles.buyContainer}>
-                <p style={styles.buyPrice}> -{ buy.price } </p>
-                <p style={styles.buy}> BUY </p>
+            <div style={ styles.buyContainer }>
+                <p style={ styles.buyPrice }> -{ buy.price } </p>
+                <p style={ styles.buy }> BUY </p>
             </div>
-            <div style={styles.dateBuyContainer}>
-                <p style={styles.dateBuy}>{ buy.date }</p>
+            <div style={ styles.dateBuyContainer }>
+                <p style={ styles.dateBuy }>{ buy.date }</p>
             </div>
         </>
     )
@@ -20,12 +22,12 @@ export const Sell = (props) => {
     const { sell } = props;
     return (
         <>
-            <div style={styles.sellContainer}>
-                <p style={styles.sellPrice}> +{ sell.price } </p>
-                <p style={styles.sell}> SELL</p>
+            <div style={ styles.sellContainer }>
+                <p style={ styles.sellPrice }> +{ sell.price } </p>
+                <p style={ styles.sell }> SELL</p>
             </div>
-            <div style={styles.dateSellContainer}>
-                <p style={styles.dateSell}>{ sell.date }</p>
+            <div style={ styles.dateSellContainer }>
+                <p style={ styles.dateSell }>{ sell.date }</p>
             </div>
         </>
     )
@@ -93,3 +95,11 @@ const styles = {
         backgroundColor: 'green',
     },
 }
+
+Buy.propTypes = {
+    buy: PropTypes.object,
+};
+
+Sell.propTypes = {
+    sell: PropTypes.object,
+};

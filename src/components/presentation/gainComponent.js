@@ -1,19 +1,19 @@
 import React from 'react';
 import { Buy, Sell } from './stockAction.js';
+import PropTypes from 'prop-types';
 
 export const GainBlock = (props) => {
-    const { gain, optimal } = props
+    const { gain, optimal } = props;
     return (
         <>
         <div onClick={()=>{props.passGain(gain)}} style={{boxShadow: (!gain.selected ? ('-5px 6px 15px #888888') : ('0px 0px 15px 10px steelblue')),
-                backgroundColor: 'white',
                 width: '100%',
                 minHeight: '50px',
                 display: 'flex',
                 marginBottom: '40px',
                 cursor: 'pointer',
                 backgroundColor: (optimal ?((gain.id === optimal.id) ? '#FFCE40': undefined):undefined),}}>
-            <div style={styles.profitDiv}>
+            <div style={ styles.profitDiv }>
                 <h1 style={{minWidth: '110px',
                         fontSize: '35px',
                         color: (optimal ?((gain.id === optimal.id) ? 'white': 'green'):'green'),
@@ -48,7 +48,6 @@ const styles = {
         textAlign: 'center',
     },
     buySell: {
-        backgroundColor: 'orange',
         width: '100%',
         height: '100%',
         minHeight: '20px',
@@ -58,3 +57,10 @@ const styles = {
         width: '200px',
     },
 }
+
+GainBlock.propTypes = {
+    key: PropTypes.number,
+    gain: PropTypes.object,
+    optimal: PropTypes.object,
+    passGain: PropTypes.func,
+};

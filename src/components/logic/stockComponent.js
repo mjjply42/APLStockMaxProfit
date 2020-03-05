@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { timeParse } from 'd3';
 import { ProfitPeriod } from './profitComponent.js';
 import { NotAvailable, Optimal } from '../presentation/optimalComponent.js';
@@ -10,7 +11,7 @@ export const StockInfo = (props) => {
 
     const opptimalProfitRange = () => {
         let rangeId = null;
-        data.map((item, index) => {
+        data.forEach((item, index) => {
             if (index === 0)
                 rangeId = 0;
             else
@@ -46,7 +47,6 @@ export const StockInfo = (props) => {
 
 const styles = {
     stockContainer: {
-        //backgroundColor: 'red',
         borderRadius: '10px',
         boxShadow: '-5px 6px 15px #888888',
         height: '600px',
@@ -54,15 +54,12 @@ const styles = {
         marginTop: '70px',
     },
     stockInfo: {
-        //backgroundColor: 'red',
         display: 'flex'
     },
     stockNameDiv: {
-        //backgroundColor: 'orange',
         width: '55%',
     },
     optimalDiv: {
-        //backgroundColor: 'purple',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -87,3 +84,9 @@ const styles = {
         marginTop: '30px',
     },
 }
+
+StockInfo.propTypes = {
+    data: PropTypes.array,
+    stock: PropTypes.object,
+    passGain: PropTypes.func,
+};
