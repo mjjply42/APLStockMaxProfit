@@ -38,7 +38,6 @@ const styles = {
         height: '34px',
         maxHeight: '50%',
         display: 'flex',
-        marginTop: '-1px',
     },
     buyPrice: {
         marginTop: '3px',

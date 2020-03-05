@@ -14,21 +14,56 @@ function App() {
 
   const svgRef = useRef();
   const [ csvData, updateData ] = useState();
+  const [ gains, updateGains ] = useState();
+
+  const margin = { top: 30, right: 132, bottom: 30, left: 50 };
+  const width = 900;
+  const height = 600;
+
+  const drawGainLine = (date, orig) => {
+    const svg = select(svgRef.current);
+    const parseDate = timeParse("%Y-%m-%e");
+    const x = scaleTime()
+          .range([0, width]);
+    x.domain([orig[0].date, orig[orig.length - 1].date]);
+    svg.selectAll(".gain").remove();
+    date.map((item, index) => {
+      svg.append("line")
+      .attr("class", "gain")
+      .attr("x1", x(parseDate(item)))
+      .attr("y1", 200)
+      .attr("x2", x(parseDate(item)))
+      .attr("y2", 500)
+      .style("stroke-width", 3)
+      .style("stroke", (index === 0 ? "red":"green"))
+      let path = svg.selectAll('.gain');
+      const pathLength = path.node().getTotalLength();
+      const transitionPath = transition()
+        .duration(500);  
+      path
+        .attr('stroke-dashoffset', pathLength)
+        .attr('stroke-dasharray', pathLength)
+        .transition(transitionPath)
+        .attr('stroke-dashoffset', 0);;
+    })
+  }
+
+
 
   useEffect(() => {
     const svg = select(svgRef.current);
-    let margin = { top: 30, right: 132, bottom: 30, left: 50 };
-    let width = 900;
-    let height = 600;
-
 
     csv(appleData).then((data) => {
+      updateData(data)
+      let profitObject = maxProfit(data);
+      updateGains(maxGains(profitObject, data));
       let parseDate = timeParse("%Y-%m-%e");
-    let bisectDate = bisector(function(d) { return d.date; }).left;
-    let formatValue = format(",");
-    let dateFormatter = timeFormat("%y-%m-%d");
+      let bisectDate = bisector(function(d) { return d.date; }).left;
+      let formatValue = format(",");
+      let dateFormatter = timeFormat("%y-%m-%d");
 
-    updateData(data);
+      
+
     let x = scaleTime()
             .range([0, width]);
 
@@ -42,7 +77,7 @@ function App() {
             .call(xAxis);
       
           const yAxis = axisLeft(y)
-          .ticks(10)
+          .ticks(8)
           svg.select('.y-axis')
             .call(yAxis);
 
@@ -70,17 +105,22 @@ function App() {
         data.sort(function(a, b) {
             return a.date - b.date;
         });
+        let dataClone = JSON.parse(JSON.stringify(data));
+        dataClone.sort(function(a, b) {
+          return a.price - b.price;
+      });
         x.domain([data[0].date, data[data.length - 1].date]);
         y.domain(extent(data, function(d, index) { 
-          if (index == 0)
+          if (d.price === dataClone[0].price)
             return (d.price - 50);
-          if (index === data.length - 1)
-            return (d.price + 30);
-          return (d.price); }));
+          if (d.price === dataClone[dataClone.length - 1].price)
+            return (d.price + 50);
+          return (d.price); 
+        }));
 
         svg.append("g")
             .attr("class", "x-axis")
-            .attr("transform", "translate(0," + (height + 25) + ")")
+            .attr("transform", "translate(0," + (height + 5) + ")")
             .call(xAxis);
 
         svg.append("g")
@@ -89,7 +129,7 @@ function App() {
             .append("text")
             .attr("transform", "translate(0," + width + ")")
             .style("text-anchor", "end")
-            .text("Number of Price");
+            .text("Price");
 
         svg.append("path")
             .datum(data)
@@ -175,14 +215,77 @@ bgGradient
             tooltip.select(".tooltip-date").text(dateFormatter(d.date));
             tooltip.select(".tooltip-price").text(formatValue(d.price));
         }
-    }); 
+    });
   },[]);
+
+  const maxProfit = (prices) => {
+    let maxProf = [
+      {
+        id: null,
+        start: null, 
+        end: null, 
+        profit: null
+      }
+    ];
+    for (let i = 0; i < prices.length - 1; i++) {
+        for (let j = i + 1; j < prices.length; j++) {
+            let profit = prices[j].price - prices[i].price;
+            if (profit > maxProf[0].profit)
+            {
+              if (maxProf[0].profit === null)
+              {
+                maxProf[0].start =  i;
+                maxProf[0].end =  j; 
+                maxProf[0].profit = profit;
+                maxProf[0].id = 0;
+              }
+                maxProf = [];
+                maxProf.push({start: i, end: j, profit: profit});
+            }
+            else if (profit === maxProf[0].profit)
+              maxProf.push({start: i, end: j, profit: profit});
+        }
+    }
+    return (maxProf);
+  };
+
+  const maxGains = (profits, data) => {
+    let gains = [];
+    profits.map((item, index) => {
+      gains.push({
+        id: index,
+        buy: {date: data[item.start].date, price: data[item.start].price},
+        sell: {date: data[item.end].date, price: data[item.end].price},
+        profit: item.profit,
+        ideal: false,
+        selected: false
+      })
+    })
+    return (gains);
+  }
+
+  const adjustSelectedItem = (gain) => {
+    let gainCopy = JSON.parse(JSON.stringify(gains))
+    console.log("GAIN: ", gainCopy)
+    gainCopy.map((g) => {
+      if (g.id === gain.id)
+        g.selected = true
+      else
+        g.selected = false
+    })
+    updateGains(gainCopy);
+  }
+
+  const gainAdjust = (gain) => { 
+    adjustSelectedItem(gain)
+    drawGainLine([gain.buy.date, gain.sell.date], csvData); 
+  };
 
   return (
         <div className='container' style={styles.appContainer}>
           <svg width='900' height='600' style={styles.chartContainer} ref={ svgRef }>
           </svg>
-          <StockInfo stock={ stock } data={ csvData }/>
+          <StockInfo stock={ stock } data={ gains } passGain={ gainAdjust }/>
         </div>
   );
 }

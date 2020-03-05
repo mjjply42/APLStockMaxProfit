@@ -5,8 +5,16 @@ export const GainBlock = (props) => {
     const { gain } = props
     return (
         <>
-        <div style={ styles.gainContainer }>
-            <h1 style={ styles.profit }> +{ gain.profit } </h1>
+        <div onClick={()=>{props.passGain(gain)}} style={{boxShadow: (!gain.selected ? ('-5px 6px 15px #888888') : ('0px 0px 15px 10px steelblue')),
+        backgroundColor: 'white',
+        width: '100%',
+        minHeight: '50px',
+        display: 'flex',
+        marginBottom: '40px',
+        cursor: 'pointer',}}>
+            <div style={styles.profitDiv}>
+                <h1 style={ styles.profit }> +{ gain.profit } </h1>
+            </div>
             <div style={ styles.buySell }>
                 <Buy buy={ gain.buy }/>
                 <Sell sell={ gain.sell }/>
@@ -27,12 +35,11 @@ const styles = {
         cursor: 'pointer',
     },
     profit: {
-        minWidth: '80px',
+        minWidth: '110px',
         fontSize: '35px',
         color: 'green',
         gridArea: 'profit',
-        marginLeft: '20px',
-        marginRight: '24px',
+        textAlign: 'center',
     },
     buySell: {
         backgroundColor: 'orange',
@@ -40,5 +47,8 @@ const styles = {
         height: '100%',
         minHeight: '20px',
         gridArea: 'info',
-    }
+    },
+    profitDiv: {
+        width: '200px',
+    },
 }

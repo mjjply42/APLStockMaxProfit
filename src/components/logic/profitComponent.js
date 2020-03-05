@@ -2,53 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GainBlock } from '../presentation/gainComponent.js';
 
 export const ProfitPeriod = (props) => {
-    const gains = [
-        {
-            buy: { date: '2018/08/23', price: 134}, 
-            sell: { date: '2018/08/30', price: 334}, 
-            profit: 234
-        },
-        {
-            buy: { date: '2017/03/23', price: 24}, 
-            sell: { date: '2017/06/30', price: 123}, 
-            profit: 99,
-        },
-        {
-            buy: { date: '2017/03/23', price: 24}, 
-            sell: { date: '2017/06/30', price: 123}, 
-            profit: 99,
-        },
-        {
-            buy: { date: '2017/03/23', price: 24}, 
-            sell: { date: '2017/06/30', price: 123}, 
-            profit: 99,
-        },
-        {
-            buy: { date: '2017/03/23', price: 24}, 
-            sell: { date: '2017/06/30', price: 123}, 
-            profit: 99,
-        },
-        {
-            buy: { date: '2017/03/23', price: 24}, 
-            sell: { date: '2017/06/30', price: 123}, 
-            profit: 99,
-        },
-        {
-            buy: { date: '2017/03/23', price: 24}, 
-            sell: { date: '2017/06/30', price: 123}, 
-            profit: 99,
-        }
-    ];
-
+    const { data } = props;
     return (
         <>
         <div style={styles.profitPeriodContainer}>
             <div style={styles.gainContainer}>
-            {gains.map((gain, index) => {
+            {data ? data.map((gain, index) => {
                 return (
-                    <GainBlock gain={ gain }/>
+                    <GainBlock key={ index } gain={ gain } passGain={ props.passGain }/>
                 )
-            })}
+            }) : undefined }
             </div>
         </div>
         </>
@@ -65,6 +28,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         overflowY: 'scroll',
+        paddingTop: '25px',
     },
     gainContainer: {
         //backgroundColor: 'purple',

@@ -10,7 +10,7 @@ export const StockInfo = (props) => {
                 <h1 style={ styles.symbol }>{ stock.symbol }</h1>
                 <p style={ styles.companyName }>{ stock.company }</p>
                 <hr style={ styles.nameLineBreak }></hr>
-                <ProfitPeriod data={ data }/>
+                <ProfitPeriod data={ data } passGain={ props.passGain }/>
             </div>
         </div>
         </>
@@ -38,6 +38,7 @@ const styles = {
         fontSize: '20px',
         marginTop: '-40px',
         marginLeft: '20px',
+        color: '#939393',
     },
     nameLineBreak :{
         color: 'black',
